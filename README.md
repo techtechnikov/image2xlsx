@@ -3,7 +3,7 @@
   
   
 ### This repository contains two programs:  
-  * [client javascript code] https://github.com/techtechnikov/image2text/client
-  * [server python code] https://github.com/techtechnikov/image2text/server
+  * [client javascript code](https://github.com/techtechnikov/image2text/client)
+  * [server python code](https://github.com/techtechnikov/image2text/server)
 
 
