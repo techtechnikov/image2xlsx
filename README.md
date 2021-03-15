@@ -1,4 +1,4 @@
-# image2text
+# image2xlsx
 ## Program converts image with text to Microsoft excel format (.xlsx) 
   
   
