@@ -23,7 +23,7 @@ def open_folder(*args):
         if item.is_file:
             filepath = item.path.replace('/', os.path.sep)
             result = handling.handle(filepath)
-            balls[result[0]] = (len(right_answers.intersection(result[1])), [str(i[0])+' '+i[1] for i in enumerate(result[1])])
+            balls[result[0]] = (len(right_answers.intersection(result[1])), [i[0]+' '+i[1] for i in result[1]].sort())
 
 def save_file(*args):
     pass
