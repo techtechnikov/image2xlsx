@@ -39,9 +39,11 @@ def open_folder(*args):
     message_string['text'] = f'Обработано! {round(time.time()-start_time, 4)} c'
 
 def save_file(*args):
+    global results_file
     results_file = openpyxl.Workbook()
-
-    path = asksaveasfilename('')
+    results_file.create_sheet(title='New worksheet')
+    path = asksaveasfilename(filetypes=[("Excel files", ".xlsx .xls")])
+    if not path: return
     results_file.save(path)
 
 def save_right_answers(*args):
@@ -67,11 +69,12 @@ pb.pack(side=TOP)
 file_menu = Menu(main_menu, tearoff=0)
 file_menu.add_command(label="open", command=open_folder)
 root.bind_all('<Control-o>', open_folder)
-file_menu.add_command(label="save as")
+file_menu.add_command(label="save as", command=save_file)
+root.bind_all('<Control-s>', save_file)
 main_menu.add_cascade(label='File', menu=file_menu)
 
 right_answers_input = Text(root, width=20, height=15)
 right_answers_input.pack(side=TOP, padx=60, pady=50)
 right_answers_input.bind('<Return>', save_right_answers)
 
-#root.mainloop()
+root.mainloop()
