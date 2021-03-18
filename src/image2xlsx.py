@@ -41,7 +41,9 @@ def open_folder(*args):
 def save_file(*args):
     global results_file
     results_file = openpyxl.Workbook()
-    results_file.create_sheet(title='New worksheet')
+    ws = results_file.active
+    ws.title = "Результаты"
+    
     path = asksaveasfilename(filetypes=[("Excel files", ".xlsx .xls")])
     if not path: return
     results_file.save(path)
