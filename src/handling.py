@@ -14,4 +14,4 @@ else:
 if mode == 'user1':
     n = NeuralNetwork.import_from_file('neuralnetwork.json') # loading learned nueral network
 else:
-    n = NeuralNetwork(43)
+    n = NeuralNetwork()

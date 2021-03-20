@@ -72,7 +72,7 @@ def save_file(*args):
         message_string['bg'] = 'red'
         return
     message_string['bg'] = 'green'
-    message_string['text'] = 'All ok'
+    message_string['text'] = 'Сохранение...'
     
     results_file = openpyxl.Workbook()
     ws = results_file.active
