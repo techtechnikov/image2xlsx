@@ -16,7 +16,7 @@ def join_array(arr):
 
 def handle(path):
     print(path)
-    for i in range(TRAINING_ITERATIONS00):pass
+    for i in range(1000000):pass
     return ('Иван Иванов', 7, {('1', 'a'), ('2', 'b'), ('3', 'c')})
 
 def detect_blank(img):
@@ -35,7 +35,7 @@ else:
     char_detector = NeuralNetwork(16*16,NUMBER_OF_CHARS)
     digit_detector = NeuralNetwork(16*16,NUMBER_OF_DIGITS)
     label_detector = NeuralNetwork(16, 1)
-    
+    '''
     char_detector_datasets_path = input('Type path to datasets for char detector: ')
     digit_detector_datasets_path = input('Type path to datasets for digits detector: ')
     label_detector_datasets_path = input('Type path to datasets for label detector: ')
@@ -76,4 +76,4 @@ else:
 
     char_detector.export_to_file('char_detector.json')  # saving learned nueral network
     digit_detector.export_to_file('digit_detector.json')
-    label_detector.export_to_file('label_detector.json')
+    label_detector.export_to_file('label_detector.json')'''
