@@ -1,9 +1,9 @@
 # image2text
-## Program converts image with text to text
+## Program converts blanks to xlsx files
   
   
-### This repository contains two programs:  
-  * [client javascript code](https://github.com/techtechnikov/image2text/tree/master/client)
-  * [server python code](https://github.com/techtechnikov/image2text/tree/master/server)
+### This repository contains two folders:  
+  * [source code](https://github.com/techtechnikov/image2text/tree/master/src)
+  * [built](https://github.com/techtechnikov/image2text/tree/master/built)
 
 
