@@ -40,12 +40,14 @@ ABC = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'
 path = ''
 balls = {}
 right_answers = set()
+stop = False
 
 root = Tk()
 main_menu = Menu(root)
 root.config(menu=main_menu)
 
 def open_folder(*args):
+    global stop
     global balls
     save_right_answers()
     path = askdirectory()
@@ -56,15 +58,28 @@ def open_folder(*args):
     pb['length'] = 200
     n = 0
     for item in dir_data:
-        if item.is_file:
+        if stop:
+            stop = False
+            message_string['text'] = 'Операция прервана'
+            message_string['bg'] = 'yellow'
+            return
+        if item.is_file():
             filepath = item.path.replace('/', os.path.sep)
-            result = handling.handle(filepath)
+            try:
+                result = handling.handle(filepath)
+            except Exception:
+                message_string['text'] = f'Ошибка в файле {filepath}'
+                message_string['bg'] = 'red'
+                return
             balls[result[0]] = (len(right_answers.intersection(result[2])), result[1], sorted([i[0]+' '+i[1] for i in result[2]]))
+        else:
+            message_string['text'] = f'Внимание, в папке не только изображения'
+            message_string['bg'] = 'orange'
         pb.step(100/all_files)
         pb.update()
-        message_string['text'] = f'Обработка... {round(n*100/all_files, 4)}%'
+        message_string['text'] = f'Обработка... {round(n*100/all_files)}%'
         n += 1
-    message_string['text'] = f'Обработано! {round(time.time()-start_time, 4)} c'
+    message_string['text'] = f'Обработано! {round(time.time()-start_time, 2)} c'
 
 def save_file(*args):
     if not balls:
@@ -119,17 +134,24 @@ def save_right_answers(*args):
         message_string['text'] = 'Неправильный синтаксис ответов!'
         message_string['bg'] = 'red'
 
+def cancel_operation(*args):
+    global stop
+    stop = True
+
 message_string = Label(root, text='')
 message_string.pack(side=TOP)
 
 pb = ttk.Progressbar(root, length=200)
 pb.pack(side=TOP, pady=5)
 
+cancel_button = Button(text='Cancel', bg='orange', command=cancel_operation)
+cancel_button.pack(side=TOP)
+root.bind_all('<Control-c>', cancel_operation)
 
 file_menu = Menu(main_menu, tearoff=0)
-file_menu.add_command(label="open", command=open_folder)
+file_menu.add_command(label="Open (ctrl-o)", command=open_folder)
 root.bind_all('<Control-o>', open_folder)
-file_menu.add_command(label="save as", command=save_file)
+file_menu.add_command(label="Save as (ctrl-s)", command=save_file)
 root.bind_all('<Control-s>', save_file)
 main_menu.add_cascade(label='File', menu=file_menu)
 

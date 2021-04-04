@@ -9,14 +9,13 @@ class Neuron():
         self.sigmoid_deriv = lambda x: x * (1 - x)
 
     def train(self, inputs, outputs, number_of_training_iterations):
+        progress = 0
         for i in range(number_of_training_iterations):
             output = self.think(inputs)
-
             error = outputs - output
-
             adj = np.dot(inputs.T, error * self.sigmoid_deriv(output))
-
             self.weights += adj
+            progress += 1
 
     def think(self, inputs):
         return self.sigmoid(np.dot(inputs, self.weights))
@@ -32,8 +31,9 @@ class NeuralNetwork:
         self.layer = [Neuron(number_of_synaps)  for i in range(number_of_neurons_in_layer)]
         self.number_of_synaps = number_of_synaps
 
-    def train(self, inputs, outputs, number_of_training_iterations):
+    def train(self, inputs, outputs, number_of_training_iterations, DEBUG=False):
         for i, n in enumerate(self.layer):
+            if DEBUG: print(f'Training neuron {i}...', end='\n'+('- '*40)+'\n')
             n.train(inputs, outputs[i], number_of_training_iterations)
 
 
