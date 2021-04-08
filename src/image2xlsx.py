@@ -54,8 +54,11 @@ def open_folder(*args):
     if not path: return
     start_time = time.time()
     all_files = len(list(os.scandir(path)))
+    errors = []
     dir_data = os.scandir(path)
     pb['length'] = 200
+    pb['value'] = 0
+    pb.update()
     n = 0
     for item in dir_data:
         if stop:
@@ -68,9 +71,15 @@ def open_folder(*args):
             try:
                 result = handling.handle(filepath)
             except Exception:
-                message_string['text'] = f'Ошибка в файле {filepath}'
+                message_string['text'] = f'Ошибка в файле {filepath}\nнечёткий скан или не изображение'
+                errors.append(f'Ошибка в файле {filepath}\nнечёткий скан или не изображение')
                 message_string['bg'] = 'red'
-                return
+                cancel_button['text'] = 'Continue'
+                while not stop:
+                    root.update()
+                stop = False
+                cancel_button['text'] = 'Cancel'
+                
             balls[result[0]] = (len(right_answers.intersection(result[2])), result[1], sorted([i[0]+' '+i[1] for i in result[2]]))
         else:
             message_string['text'] = f'Внимание, в папке не только изображения'
@@ -113,7 +122,7 @@ def save_file(*args):
         try:
             os.remove(path)
         except PermissionError:
-            message_string['text'] = 'Закройте файл в другой программе'
+            message_string['text'] = 'Файл открыт в другой программе или нет прав для записи в файл'
             message_string['bg'] = 'red'
             
     results_file.save(path)
