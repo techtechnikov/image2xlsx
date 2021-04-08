@@ -13,8 +13,7 @@ imgs = []
 
 def join_array(arr):
     return arr.reshape((arr.size//len(arr[0][0]), len(arr[0][0])))
-
-def handle(path, DEBUG=False):
+def handle(path):
     classnumber = 0
     name = ''
     classnumbers = []
@@ -57,11 +56,9 @@ def handle(path, DEBUG=False):
     return ('Иван Иванов\t'+path, classnumber, {('1', 'a'), ('2', 'b'), ('3', 'c')})
 
 def label_sum(img):
-    label_array = join_array(np.array(img))
-    #pixels_sum_label = sum(sum(label_array))
-    pixel = label_array[0]
-    dark_pixels_count = np.count_nonzero(label_array < pixel)
-    return dark_pixels_count
+    label_array = np.array(img.convert('1'))
+    pixels_sum_label = sum(sum(label_array))
+    return pixels_sum_label
 
 if os.path.exists('usermode.lock'):    #checking mode for 'user' or 'develop'
     mode = 'user'
