@@ -80,7 +80,7 @@ def open_folder(*args):
                 stop = False
                 cancel_button['text'] = 'Cancel'
                 
-            balls[result[0]] = (len(right_answers.intersection(result[2])), result[1], sorted([i[0]+' '+i[1] for i in result[2]]))
+            balls[result[0]] = (len(right_answers.intersection(result[2])), result[1], sorted([str(i[0])+' '+str(i[1]) for i in result[2]]))
         else:
             message_string['text'] = f'Внимание, в папке не только изображения'
             message_string['bg'] = 'orange'
